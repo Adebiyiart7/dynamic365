@@ -13,6 +13,7 @@ import {
   ThumbsUp,
   Trophy,
 } from "lucide-react";
+import Image from "next/image";
 
 interface Props {
   selectedItem: LeadCardProps | null;
@@ -37,7 +38,7 @@ const LeadDetail = ({ selectedItem: selectedItem, onClose }: Props) => {
       </div>
       {/* Header */}
       <div className="flex items-center space-x-2 shadow rounded-2xl p-4">
-        <img
+        <Image
           src="https://picsum.photos/100"
           alt={selectedItem.name}
           className="max-w-10 max-h-10 rounded-full"

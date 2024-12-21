@@ -135,7 +135,7 @@ const Table = () => {
     key: "createdOn",
     direction: "desc",
   });
-  const [selectedStatus, setSelectedStatus] = useState("All");
+  const [selectedStatus] = useState("All");
 
   const handleSort = (key) => {
     setSortConfig({
@@ -148,7 +148,7 @@ const Table = () => {
   };
 
   const filteredAndSortedData = useMemo(() => {
-    let filtered = data.filter((item) => {
+    const filtered = data.filter((item) => {
       const matchesSearch = Object.values(item).some((value) =>
         value.toLowerCase().includes(searchTerm.toLowerCase())
       );
@@ -174,14 +174,14 @@ const Table = () => {
     });
   }, [searchTerm, sortConfig, selectedStatus]);
 
-  const statuses = [
-    "All",
-    "New",
-    "Pending",
-    "In Progress",
-    "Resolved",
-    "Closed",
-  ];
+  // const statuses = [
+  //   "All",
+  //   "New",
+  //   "Pending",
+  //   "In Progress",
+  //   "Resolved",
+  //   "Closed",
+  // ];
 
   return (
     <div className="text-sm shadow">

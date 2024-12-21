@@ -1,16 +1,16 @@
 "use client";
 
 import logo from "@/app/assets/copilot.png";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { FaRegClock } from "react-icons/fa";
 import { IoChevronDown, IoChevronUp } from "react-icons/io5";
-import LeadCard from "./LeadCard";
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { Carousel } from "react-responsive-carousel";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import KeyActivities from "./KeyActivities";
 import Modal from "react-modal";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import KeyActivities from "./KeyActivities";
+import LeadCard from "./LeadCard";
 import LeadDetail from "./LeadDetail";
 
 export interface LeadCardProps {
@@ -28,11 +28,11 @@ const progress = 68; // percentage
 const total = 111;
 
 const LeadsBoard = () => {
-  const carouselRef = useRef(null);
+  // const carouselRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const [seletedItem, setSelectedItem] = useState<LeadCardProps | null>(null);
   const [showFullCard, setShowFullCard] = useState(false);
-
+  console.log(seletedItem?.name);
   const handleClick = () => {
     setShowFullCard(!showFullCard);
   };
@@ -248,9 +248,8 @@ const LeadsBoard = () => {
           showStatus={false}
         >
           {leads.map((item, index) => (
-            <div className="snap-start">
+            <div className="snap-start" key={index.toString()}>
               <LeadDetail
-                key={index.toString()}
                 selectedItem={item[0]}
                 onClose={() => setIsOpen(false)}
               />

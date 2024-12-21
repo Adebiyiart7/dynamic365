@@ -17,9 +17,10 @@ import { Share } from "lucide-react";
 import { Check } from "lucide-react";
 import { MoreVertical } from "lucide-react";
 import { ImShare } from "react-icons/im";
+import { Icon } from "next/dist/lib/metadata/types/metadata-types";
 
 interface MobileMenuProps {
-  icon: any;
+  icon: Icon;
   label: string;
   onClick?: () => void;
 }
