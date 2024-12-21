@@ -41,6 +41,8 @@ const LeadDetail = ({ selectedItem: selectedItem, onClose }: Props) => {
         <Image
           src="https://picsum.photos/100"
           alt={selectedItem.name}
+          width={40}
+          height={40}
           className="max-w-10 max-h-10 rounded-full"
         />
         <div>

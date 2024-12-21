@@ -1,8 +1,17 @@
 import { Sparkles } from "lucide-react";
+import { IconType } from "react-icons";
 import { BsBank2 } from "react-icons/bs";
 import { MdOutlineEmail } from "react-icons/md";
 import { SiThurgauerkantonalbank } from "react-icons/si";
 
+interface Props {
+  icon: IconType;
+  title: string;
+  organization: string;
+  amount: number;
+  daysToClose: number;
+  action: string;
+}
 const ActivityCard = ({
   icon: Icon,
   title,
@@ -10,7 +19,7 @@ const ActivityCard = ({
   amount,
   daysToClose,
   action,
-}) => (
+}: Props) => (
   <div className="bg-white rounded-lg p-3 mb-4 hover:shadow-sm drop-shadow transition-shadow cursor-pointer">
     <div className="flex items-start gap-2">
       <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">

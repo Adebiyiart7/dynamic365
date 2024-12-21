@@ -95,20 +95,21 @@ const LeadsBoard = () => {
   };
 
   const renderIndicator = (
-    clickHandler: () => void,
+    clickHandler: (e: React.MouseEvent | React.KeyboardEvent) => void,
     isSelected: boolean,
-    index: number
+    index: number,
+    label: string
   ) => {
     return (
       <button
         key={index}
         onClick={clickHandler}
-        className={`mx-0.5  transition-all duration-300 ${
+        className={`mx-0.5 transition-all duration-300 ${
           isSelected
             ? "bg-blue-600 w-6 h-1 rounded-lg"
             : "bg-gray-300 w-1 h-1 rounded-full"
         }`}
-        aria-label={`Slide ${index + 1}`}
+        aria-label={label} // Ensure accessibility with the provided label
       ></button>
     );
   };
@@ -221,15 +222,15 @@ const LeadsBoard = () => {
             borderWidth: 2,
             borderColor: "#3b82f6",
             borderRadius: "0.75rem", // 12px
-            "--tw-bg-opacity": 1,
-            "--tw-shadow":
-              "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
-            "--tw-shadow-colored":
-              "0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color)",
+            // "--tw-bg-opacity": 1,
+            // "--tw-shadow":
+            //   "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+            // "--tw-shadow-colored":
+            //   "0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color)",
             boxShadow:
               "var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)",
-            "--tw-drop-shadow":
-              "drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1))",
+            // "--tw-drop-shadow":
+            //   "drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1))",
             filter:
               "var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)",
             transitionProperty: "box-shadow",
