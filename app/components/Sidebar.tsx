@@ -1,9 +1,16 @@
 "use client";
 
 import { useState } from "react";
+import { BsFileEarmarkMedical } from "react-icons/bs";
+import { FiBox, FiFileText } from "react-icons/fi";
+import { LiaFileInvoiceSolid } from "react-icons/lia";
+import {
+  LuFileChartColumnIncreasing,
+  LuFileStack,
+  LuUserX,
+} from "react-icons/lu";
 import {
   MdAccessTime,
-  MdHome,
   MdMenu,
   MdOutlineCampaign,
   MdOutlineContentPaste,
@@ -12,23 +19,12 @@ import {
   MdOutlineHome,
   MdOutlinePerson,
   MdOutlinePushPin,
-  MdOutlineRocket,
   MdOutlineRocketLaunch,
   MdOutlineSettingsPhone,
-  MdPerson,
 } from "react-icons/md";
-import { useSidebar } from "../hooks/sidebarState";
-import { BsFileEarmarkMedical } from "react-icons/bs";
-import {
-  LuFileChartColumnIncreasing,
-  LuFileStack,
-  LuUserX,
-} from "react-icons/lu";
-import { FiBox, FiFileText } from "react-icons/fi";
-import { LiaFileInvoiceSolid } from "react-icons/lia";
 import { PiListStarFill } from "react-icons/pi";
+import { useSidebar } from "../hooks/sidebarState";
 
-const PRIMARY_COLOR = "rgb(57,92,196)";
 // Navigation items
 const navigationItems = [
   {
@@ -176,7 +172,7 @@ const navigationItems = [
 const Sidebar = () => {
   const showSidebar = useSidebar((state) => state.showSidebar);
   const toggleSidebar = useSidebar((state) => state.toggleSidebar);
-  const [showSidebarOnHover, setShowSidebarOnHover] = useState(toggleSidebar);
+  // const [showSidebarOnHover, setShowSidebarOnHover] = useState(toggleSidebar);
 
   return (
     <aside

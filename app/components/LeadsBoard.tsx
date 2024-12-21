@@ -3,7 +3,7 @@
 import logo from "@/app/assets/copilot.png";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { FaRegClock } from "react-icons/fa";
 import { IoChevronDown, IoChevronUp } from "react-icons/io5";
 import Modal from "react-modal";
