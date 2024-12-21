@@ -1,11 +1,23 @@
 "use client";
 
-import logo from "@/app/assets/copilot.png";
-import { ChevronDown, ChevronUp } from "lucide-react";
 import Image from "next/image";
 import { useMemo, useState } from "react";
+import { ChevronDown, ChevronUp } from "lucide-react";
+import logo from "@/app/assets/copilot.png";
 
-const data = [
+interface DataItem {
+  name: string;
+  topic: string;
+  status: string;
+  createdOn: string;
+}
+
+interface SortConfig {
+  key: keyof DataItem;
+  direction: "asc" | "desc";
+}
+
+const data: DataItem[] = [
   {
     name: "Winford Asher",
     topic: "Cafe A100 for commercial use",
@@ -130,27 +142,33 @@ const data = [
 ];
 
 const Table = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [sortConfig, setSortConfig] = useState({
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [sortConfig, setSortConfig] = useState<SortConfig>({
     key: "createdOn",
     direction: "desc",
   });
-  const [selectedStatus] = useState("All");
+  const [selectedStatus, setSelectedStatus] = useState<string>("All");
 
-  const handleSort = (key) => {
-    setSortConfig({
+  const statuses = [
+    "All",
+    "New",
+    "Pending",
+    "In Progress",
+    "Resolved",
+    "Closed",
+  ];
+
+  const handleSort = (key: keyof DataItem) => {
+    setSortConfig((prev) => ({
       key,
-      direction:
-        sortConfig.key === key && sortConfig.direction === "asc"
-          ? "desc"
-          : "asc",
-    });
+      direction: prev.key === key && prev.direction === "asc" ? "desc" : "asc",
+    }));
   };
 
   const filteredAndSortedData = useMemo(() => {
     const filtered = data.filter((item) => {
       const matchesSearch = Object.values(item).some((value) =>
-        value.toLowerCase().includes(searchTerm.toLowerCase())
+        value.toString().toLowerCase().includes(searchTerm.toLowerCase())
       );
       const matchesStatus =
         selectedStatus === "All" || item.status === selectedStatus;
@@ -158,38 +176,53 @@ const Table = () => {
     });
 
     return filtered.sort((a, b) => {
-      if (sortConfig.key === "createdOn") {
-        const dateA = new Date(a[sortConfig.key]);
-        const dateB = new Date(b[sortConfig.key]);
-        return sortConfig.direction === "asc" ? dateA - dateB : dateB - dateA;
+      const { key, direction } = sortConfig;
+
+      if (key === "createdOn") {
+        const dateA = new Date(a[key]).getTime();
+        const dateB = new Date(b[key]).getTime();
+        return direction === "asc" ? dateA - dateB : dateB - dateA;
       }
 
-      if (a[sortConfig.key] < b[sortConfig.key]) {
-        return sortConfig.direction === "asc" ? -1 : 1;
-      }
-      if (a[sortConfig.key] > b[sortConfig.key]) {
-        return sortConfig.direction === "asc" ? 1 : -1;
-      }
+      const valueA = a[key].toString().toLowerCase();
+      const valueB = b[key].toString().toLowerCase();
+      if (valueA < valueB) return direction === "asc" ? -1 : 1;
+      if (valueA > valueB) return direction === "asc" ? 1 : -1;
       return 0;
     });
   }, [searchTerm, sortConfig, selectedStatus]);
 
-  // const statuses = [
-  //   "All",
-  //   "New",
-  //   "Pending",
-  //   "In Progress",
-  //   "Resolved",
-  //   "Closed",
-  // ];
+  const TableHeader = ({
+    label,
+    sortKey,
+  }: {
+    label: string;
+    sortKey: keyof DataItem;
+  }) => (
+    <th
+      className="px-4 py-2 text-left cursor-pointer hover:bg-gray-100"
+      onClick={() => handleSort(sortKey)}
+    >
+      <div className="flex items-center gap-2">
+        {label}
+        {sortConfig.key === sortKey &&
+          (sortConfig.direction === "asc" ? (
+            <ChevronUp className="h-4 w-4" />
+          ) : (
+            <ChevronDown className="h-4 w-4" />
+          ))}
+      </div>
+    </th>
+  );
 
   return (
     <div className="text-sm shadow">
       <div className="mb-4 flex gap-4">
+        {/* Search Input */}
         <div className="relative w-full max-w-96">
           <input
             type="text"
-            placeholder="Sort, filter and search with Copilot"
+            placeholder="Sort, filter, and search"
             className="w-full pl-10 pr-4 py-2 border border-blue-500 rounded-md focus:outline-none focus:border-2"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -202,8 +235,10 @@ const Table = () => {
             className="absolute right-3 top-2.5 h-4 w-4 text-gray-400"
           />
         </div>
-        {/* <select
-          className="borer rounded-md px-4 py-2"
+
+        {/* Status Filter */}
+        <select
+          className="border rounded-md px-4 py-2"
           value={selectedStatus}
           onChange={(e) => setSelectedStatus(e.target.value)}
         >
@@ -212,9 +247,10 @@ const Table = () => {
               {status}
             </option>
           ))}
-        </select> */}
+        </select>
       </div>
 
+      {/* Table */}
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white">
           <thead className="bg-gray-50">
@@ -222,30 +258,10 @@ const Table = () => {
               <th className="w-8 px-4 py-2">
                 <input type="checkbox" className="rounded" />
               </th>
-              {["Name", "Topic", "Status reason", "Created on"].map(
-                (header, index) => (
-                  <th
-                    key={header}
-                    className="px-4 py-2 text-left cursor-pointer hover:bg-gray-100"
-                    onClick={() =>
-                      handleSort(
-                        ["name", "topic", "status", "createdOn"][index]
-                      )
-                    }
-                  >
-                    <div className="flex items-center gap-2">
-                      {header}
-                      {sortConfig.key ===
-                        ["name", "topic", "status", "createdOn"][index] &&
-                        (sortConfig.direction === "asc" ? (
-                          <ChevronUp className="h-4 w-4" />
-                        ) : (
-                          <ChevronDown className="h-4 w-4" />
-                        ))}
-                    </div>
-                  </th>
-                )
-              )}
+              <TableHeader label="Name" sortKey="name" />
+              <TableHeader label="Topic" sortKey="topic" />
+              <TableHeader label="Status" sortKey="status" />
+              <TableHeader label="Created On" sortKey="createdOn" />
             </tr>
           </thead>
           <tbody>

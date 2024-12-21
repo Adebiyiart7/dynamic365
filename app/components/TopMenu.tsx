@@ -6,6 +6,7 @@ import {
   ChevronDown,
   Layout,
   LineChart,
+  LucideProps,
   Menu,
   MoreVertical,
   Pencil,
@@ -16,12 +17,16 @@ import {
   Users,
   X,
 } from "lucide-react";
-import { Icon } from "next/dist/lib/metadata/types/metadata-types";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { IconType } from "react-icons";
 import { ImShare } from "react-icons/im";
 
 interface MobileMenuProps {
-  icon: Icon;
+  icon:
+    | IconType
+    | React.ForwardRefExoticComponent<
+        Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>
+      >;
   label: string;
   onClick?: () => void;
 }
