@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { BsFileEarmarkMedical } from "react-icons/bs";
 import { FiBox, FiFileText } from "react-icons/fi";
 import { LiaFileInvoiceSolid } from "react-icons/lia";
@@ -171,7 +170,7 @@ const navigationItems = [
 
 const Sidebar = () => {
   const showSidebar = useSidebar((state) => state.showSidebar);
-  const toggleSidebar = useSidebar((state) => state.toggleSidebar);
+  // const toggleSidebar = useSidebar((state) => state.toggleSidebar);
   // const [showSidebarOnHover, setShowSidebarOnHover] = useState(toggleSidebar);
 
   return (
