@@ -17,7 +17,7 @@ import {
   MdOutlineSettingsPhone,
   MdPerson,
 } from "react-icons/md";
-import { useSidebar } from "../hooks/sideBarState";
+import { useSidebar } from "../hooks/sidebarState";
 import { BsFileEarmarkMedical } from "react-icons/bs";
 import {
   LuFileChartColumnIncreasing,
